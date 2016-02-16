@@ -71,17 +71,14 @@
         if (resultType == XMPPResultTypeLoginSuccess) {
             NSLog(@"登录成功 %s",__func__);
             // 3.登录成功切换到主界面
-            [self changeToMain];
+//            [self changeToMain];
+            [UIStoryboard showInitialVCWithName:@"Main"];
             
             // 设置当前登录状态
             [ALAccount shareAccount].login = YES;
             
             // 保存登录账户信息到沙盒
             [[ALAccount shareAccount] saveToSandBox];
-//            ALAccount *account = [ALAccount shareAccount];
-//            account.user = self.userField.text;
-//            account.pwd = self.pswField.text;
-//            account.login = YES;
             
         }else{
             NSLog(@"登录失败 %s",__func__);
@@ -94,11 +91,11 @@
 #pragma mark 切换到主界面
 - (void)changeToMain
 {
-   // 1. 获取Main.storyboard的第一个控制器
-    id vc =[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
-    
-    // 2. 切换window的根控制器
-    [UIApplication sharedApplication].keyWindow.rootViewController = vc;
+//   // 1. 获取Main.storyboard的第一个控制器
+//    id vc =[[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+//    
+//    // 2. 切换window的根控制器
+//    [UIApplication sharedApplication].keyWindow.rootViewController = vc;
 
 }
 

@@ -37,6 +37,14 @@
  *  4.发送一个 "在线消息" 请求给服务器
  */
 - (void)sendOnline;
+/**
+ *  发送"离线"消息
+ */
+- (void)sendOffline;
+/**
+ *  与服务器断开连接
+ */
+- (void)disconnectFromHost;
 @end
 
 @implementation AppDelegate
@@ -84,6 +92,11 @@
     
 }
 
+- (void)disconnectFromHost
+{
+    [_xmppStream disconnect];
+}
+
 - (void)sendPwdToHost
 {
     NSError *error = nil;
@@ -105,6 +118,11 @@
     [_xmppStream sendElement:presence];
 }
 
+- (void)sendOffline
+{
+    XMPPPresence *offline = [XMPPPresence presenceWithType:@"unavailable"];
+    [_xmppStream sendElement:offline];
+}
 #pragma mark - XMPPStream的代理
 #pragma mark 连接建立成功
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
@@ -146,6 +164,15 @@
     
     // 连接服务开始登录的操作
     [self connectToHost];
+}
+
+#pragma mark 用户注销
+- (void)xmppLogout
+{
+    // 1. 发送"离线消息"给服务器
+    [self sendOffline];
+    // 2. 断开与服务器的连接
+    [self disconnectFromHost];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
