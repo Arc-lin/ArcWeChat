@@ -29,6 +29,12 @@
     dispatch_once(&onceToken, ^{
         if(account == nil){
             account = [super allocWithZone:zone];
+            
+            // 从沙盒获取上次的用户登录信息
+            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+            account.user = [defaults objectForKey:kUserKey];
+            account.pwd = [defaults objectForKey:kPwdKey];
+            account.login = [defaults objectForKey:kLoginKey];
         }
     });
     return account;

@@ -73,6 +73,9 @@
             // 3.登录成功切换到主界面
             [self changeToMain];
             
+            // 设置当前登录状态
+            [ALAccount shareAccount].login = YES;
+            
             // 保存登录账户信息到沙盒
             [[ALAccount shareAccount] saveToSandBox];
 //            ALAccount *account = [ALAccount shareAccount];

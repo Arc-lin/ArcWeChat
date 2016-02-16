@@ -153,6 +153,12 @@
     
 //    [self setUpStream];
 //    [self connectToHost];
+    // 判断用户是否登录
+    if ([ALAccount shareAccount].isLogin) {
+        // 来到主界面
+        id mainVc = [[UIStoryboard storyboardWithName:@"Main" bundle:nil] instantiateInitialViewController];
+        self.window.rootViewController = mainVc;
+    }
     
     return YES;
 }
