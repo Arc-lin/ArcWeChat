@@ -7,7 +7,6 @@
 //
 
 #import "ALMeViewController.h"
-#import "AppDelegate.h"
 
 @interface ALMeViewController ()
 
@@ -27,9 +26,12 @@
 - (IBAction)logoutBtnClick:(id)sender {
     
     // 注销
-    AppDelegate *appDelegate = [UIApplication sharedApplication].delegate;
-    [appDelegate xmppLogout];
+    [[ALXMPPTool sharedALXMPPTool] xmppLogout];
 
+    // 注销的时候，吧沙盒的登录状态设置为NO
+    [ALAccount shareAccount].login = NO;
+    [[ALAccount shareAccount] saveToSandBox];
+    
     // 回登录的控制器
     [UIStoryboard showInitialVCWithName:@"Login"];
 }

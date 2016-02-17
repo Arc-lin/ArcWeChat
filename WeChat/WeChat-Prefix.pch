@@ -14,5 +14,6 @@
 #import <UIKit/UIKit.h>
 #import "ALAccount.h"
 #import "CategoryWF.h"
+#import "ALXMPPTool.h"
 
 #endif

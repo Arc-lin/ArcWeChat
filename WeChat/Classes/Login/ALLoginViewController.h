@@ -6,8 +6,8 @@
 //  Copyright © 2016年 sziit. All rights reserved.
 //
 
-#import "ViewController.h"
+#import <UIKit/UIKit.h>
 
-@interface ALLoginViewController : ViewController
+@interface ALLoginViewController : UIViewController
 
 @end

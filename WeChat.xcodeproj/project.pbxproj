@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		350397C51C6F6A00006B3EE6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 350397C41C6F6A00006B3EE6 /* main.m */; };
 		350397C81C6F6A00006B3EE6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 350397C71C6F6A00006B3EE6 /* AppDelegate.m */; };
-		350397CB1C6F6A00006B3EE6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 350397CA1C6F6A00006B3EE6 /* ViewController.m */; };
 		350397CE1C6F6A00006B3EE6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 350397CC1C6F6A00006B3EE6 /* Main.storyboard */; };
 		350397D01C6F6A00006B3EE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 350397CF1C6F6A00006B3EE6 /* Assets.xcassets */; };
 		350397D31C6F6A00006B3EE6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 350397D11C6F6A00006B3EE6 /* LaunchScreen.storyboard */; };
@@ -156,6 +155,7 @@
 		354EB3C51C7182C500B8EB9B /* Login.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 354EB3C41C7182C500B8EB9B /* Login.storyboard */; };
 		354EB3C81C71842B00B8EB9B /* ALLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 354EB3C71C71842B00B8EB9B /* ALLoginViewController.m */; };
 		35B19C7F1C7324310038E196 /* ALMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B19C7E1C7324310038E196 /* ALMeViewController.m */; };
+		35CCD8D41C74619E00E6F6E7 /* ALXMPPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CCD8D31C74619E00E6F6E7 /* ALXMPPTool.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -163,8 +163,6 @@
 		350397C41C6F6A00006B3EE6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		350397C61C6F6A00006B3EE6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = ../../AppDelegate.h; sourceTree = "<group>"; };
 		350397C71C6F6A00006B3EE6 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = ../../AppDelegate.m; sourceTree = "<group>"; };
-		350397C91C6F6A00006B3EE6 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		350397CA1C6F6A00006B3EE6 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		350397CD1C6F6A00006B3EE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		350397CF1C6F6A00006B3EE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		350397D21C6F6A00006B3EE6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -462,6 +460,9 @@
 		354EB3C71C71842B00B8EB9B /* ALLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALLoginViewController.m; sourceTree = "<group>"; };
 		35B19C7D1C7324310038E196 /* ALMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALMeViewController.h; sourceTree = "<group>"; };
 		35B19C7E1C7324310038E196 /* ALMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALMeViewController.m; sourceTree = "<group>"; };
+		35CCD8D21C74619E00E6F6E7 /* ALXMPPTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALXMPPTool.h; sourceTree = "<group>"; };
+		35CCD8D31C74619E00E6F6E7 /* ALXMPPTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALXMPPTool.m; sourceTree = "<group>"; };
+		35CCD8D51C74631C00E6F6E7 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -500,8 +501,6 @@
 			isa = PBXGroup;
 			children = (
 				350397DA1C6F6C70006B3EE6 /* Classes */,
-				350397C91C6F6A00006B3EE6 /* ViewController.h */,
-				350397CA1C6F6A00006B3EE6 /* ViewController.m */,
 				350397CF1C6F6A00006B3EE6 /* Assets.xcassets */,
 				350397D11C6F6A00006B3EE6 /* LaunchScreen.storyboard */,
 				350397D41C6F6A00006B3EE6 /* Info.plist */,
@@ -522,6 +521,7 @@
 		350397DA1C6F6C70006B3EE6 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				35CCD8D11C74618300E6F6E7 /* Tool */,
 				35B19C7B1C7322F90038E196 /* Profile */,
 				354EB3C21C71826200B8EB9B /* Login */,
 				354EB3C31C71826200B8EB9B /* Main */,
@@ -1411,6 +1411,16 @@
 			path = Controller;
 			sourceTree = "<group>";
 		};
+		35CCD8D11C74618300E6F6E7 /* Tool */ = {
+			isa = PBXGroup;
+			children = (
+				35CCD8D51C74631C00E6F6E7 /* Singleton.h */,
+				35CCD8D21C74619E00E6F6E7 /* ALXMPPTool.h */,
+				35CCD8D31C74619E00E6F6E7 /* ALXMPPTool.m */,
+			);
+			path = Tool;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1501,6 +1511,7 @@
 				350399481C6F6C71006B3EE6 /* XMPPUserMemoryStorageObject.m in Sources */,
 				350399871C6F6C71006B3EE6 /* XMPPMessageDeliveryReceipts.m in Sources */,
 				350399311C6F6C71006B3EE6 /* NSData+XMPP.m in Sources */,
+				35CCD8D41C74619E00E6F6E7 /* ALXMPPTool.m in Sources */,
 				350399411C6F6C71006B3EE6 /* XMPPGroupCoreDataStorageObject.m in Sources */,
 				350399811C6F6C71006B3EE6 /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				350399581C6F6C71006B3EE6 /* XMPPRoomOccupantHybridMemoryStorageObject.m in Sources */,
@@ -1512,7 +1523,6 @@
 				350399831C6F6C71006B3EE6 /* XMPPvCardAvatarModule.m in Sources */,
 				350399611C6F6C71006B3EE6 /* XMPPvCardCoreDataStorage.m in Sources */,
 				3503995B1C6F6C71006B3EE6 /* XMPPRoomOccupantMemoryStorageObject.m in Sources */,
-				350397CB1C6F6A00006B3EE6 /* ViewController.m in Sources */,
 				3503997A1C6F6C71006B3EE6 /* XMPPCapabilitiesCoreDataStorage.m in Sources */,
 				350399651C6F6C71006B3EE6 /* XMPPvCardTempAdr.m in Sources */,
 				350397C81C6F6A00006B3EE6 /* AppDelegate.m in Sources */,
