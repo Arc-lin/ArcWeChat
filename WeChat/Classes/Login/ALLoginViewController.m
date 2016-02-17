@@ -7,8 +7,7 @@
 //
 
 #import "ALLoginViewController.h"
-#import "AppDelegate.h"
-#import "MBProgressHUD+HM.h"
+
 
 @interface ALLoginViewController ()
 
@@ -41,8 +40,8 @@
 //    [defaults setObject:self.pswField.text forKey:@"pwd"];
 //    [defaults synchronize]; // 同步到磁盘
     // 2.1 把用户和密码先放在Account单例
-    [ALAccount shareAccount].user = self.userField.text;
-    [ALAccount shareAccount].pwd = self.pswField.text;
+    [ALAccount shareAccount].loginUser = self.userField.text;
+    [ALAccount shareAccount].loginPwd = self.pswField.text;
     
     // 2.2 调用AppDelegate的xmppLogin方法
     // 怎么把appdelegate的登录结果告诉ALLoginViewController控制器
@@ -53,6 +52,9 @@
     // block会对self进行强引用
     __weak typeof(self) selfVc = self;
     // 自己写的block，有强引用的时候，使用弱引用，系统block，基本可以不理
+    
+    // 设置标识
+    [ALXMPPTool sharedALXMPPTool].registerOperation = NO;
     
     [[ALXMPPTool sharedALXMPPTool] xmppLogin:^(XMPPResultType resultType) {
         

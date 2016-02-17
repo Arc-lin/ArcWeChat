@@ -15,5 +15,6 @@
 #import "ALAccount.h"
 #import "CategoryWF.h"
 #import "ALXMPPTool.h"
+#import "MBProgressHUD+HM.h"
 
 #endif

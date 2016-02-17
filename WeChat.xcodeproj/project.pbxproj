@@ -156,6 +156,7 @@
 		354EB3C81C71842B00B8EB9B /* ALLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 354EB3C71C71842B00B8EB9B /* ALLoginViewController.m */; };
 		35B19C7F1C7324310038E196 /* ALMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B19C7E1C7324310038E196 /* ALMeViewController.m */; };
 		35CCD8D41C74619E00E6F6E7 /* ALXMPPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CCD8D31C74619E00E6F6E7 /* ALXMPPTool.m */; };
+		35CCD8D81C746B6A00E6F6E7 /* ALRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CCD8D71C746B6A00E6F6E7 /* ALRegisterViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -463,6 +464,8 @@
 		35CCD8D21C74619E00E6F6E7 /* ALXMPPTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALXMPPTool.h; sourceTree = "<group>"; };
 		35CCD8D31C74619E00E6F6E7 /* ALXMPPTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALXMPPTool.m; sourceTree = "<group>"; };
 		35CCD8D51C74631C00E6F6E7 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
+		35CCD8D61C746B6A00E6F6E7 /* ALRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALRegisterViewController.h; sourceTree = "<group>"; };
+		35CCD8D71C746B6A00E6F6E7 /* ALRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALRegisterViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1381,6 +1384,8 @@
 				354EB3C41C7182C500B8EB9B /* Login.storyboard */,
 				354EB3C61C71842B00B8EB9B /* ALLoginViewController.h */,
 				354EB3C71C71842B00B8EB9B /* ALLoginViewController.m */,
+				35CCD8D61C746B6A00E6F6E7 /* ALRegisterViewController.h */,
+				35CCD8D71C746B6A00E6F6E7 /* ALRegisterViewController.m */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -1630,6 +1635,7 @@
 				3503998F1C6F6C71006B3EE6 /* XMPPAttentionModule.m in Sources */,
 				350399421C6F6C71006B3EE6 /* XMPPResourceCoreDataStorageObject.m in Sources */,
 				350399571C6F6C71006B3EE6 /* XMPPRoomMessageHybridCoreDataStorageObject.m in Sources */,
+				35CCD8D81C746B6A00E6F6E7 /* ALRegisterViewController.m in Sources */,
 				3503998B1C6F6C71006B3EE6 /* XMPPAutoTime.m in Sources */,
 				3503993A1C6F6C71006B3EE6 /* XMPPPresence.m in Sources */,
 				350399591C6F6C71006B3EE6 /* XMPPRoomMemoryStorage.m in Sources */,

@@ -8,8 +8,8 @@
 
 #import "ALAccount.h"
 
-#define kUserKey @"user"
-#define kPwdKey @"pwd"
+#define kUserKey @"loginUser"
+#define kPwdKey @"loginPwd"
 #define kLoginKey @"login"
 
 @implementation ALAccount
@@ -27,15 +27,15 @@
     // 为了线程安全
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        if(account == nil){
-            account = [super allocWithZone:zone];
-            
-            // 从沙盒获取上次的用户登录信息
-            NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-            account.user = [defaults objectForKey:kUserKey];
-            account.pwd = [defaults objectForKey:kPwdKey];
-            account.login = [defaults objectForKey:kLoginKey];
-        }
+        
+        account = [super allocWithZone:zone];
+        
+        // 从沙盒获取上次的用户登录信息
+        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+        account.loginUser = [defaults objectForKey:kUserKey];
+        account.loginPwd = [defaults objectForKey:kPwdKey];
+        account.login = [defaults boolForKey:kLoginKey];
+        
     });
     return account;
 }
@@ -44,8 +44,8 @@
 {
     // 保存user psw login
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:self.user forKey:kUserKey];
-    [defaults setObject:self.pwd forKey:kPwdKey];
+    [defaults setObject:self.loginUser forKey:kUserKey];
+    [defaults setObject:self.loginPwd forKey:kPwdKey];
     [defaults setBool:self.login forKey:kLoginKey];
     [defaults synchronize];
     

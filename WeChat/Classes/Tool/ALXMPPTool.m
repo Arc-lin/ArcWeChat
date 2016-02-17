@@ -69,11 +69,20 @@ singleton_implementation(ALXMPPTool)
         [self setUpStream];
     }
     
-    // 1.设置登录用户的JID
-    // resource 用户登陆客户端设备登录的类型
-    NSString *user = [ALAccount shareAccount].user;
-    //    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
-    XMPPJID *myJid = [XMPPJID jidWithUser:user domain:@"arclin.local" resource:@"iphone"];
+    XMPPJID *myJid = nil;
+    
+    if (self.isRegisterOperation) {
+        NSString *registerUser = [ALAccount shareAccount].registerUser;
+        myJid = [XMPPJID jidWithUser:registerUser domain:@"arclin.local" resource:nil];
+    }else{ // 登录操作
+        // 1.设置登录用户的JID
+        // resource 用户登陆客户端设备登录的类型
+        NSString *loginUser = [ALAccount shareAccount].loginUser;
+        //    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
+        myJid = [XMPPJID jidWithUser:loginUser domain:@"arclin.local" resource:nil];
+        
+    }
+    
     _xmppStream.myJID = myJid;
     
     // 2.设置主机地址
@@ -103,7 +112,7 @@ singleton_implementation(ALXMPPTool)
 {
     NSError *error = nil;
     //    NSString *pwd = [[NSUserDefaults standardUserDefaults] objectForKey:@"pwd"];
-    NSString *pwd = [ALAccount shareAccount].pwd;
+    NSString *pwd = [ALAccount shareAccount].loginPwd;
     [_xmppStream authenticateWithPassword:pwd error:nil];
     if (error) {
         NSLog(@"%@",error);
@@ -129,7 +138,16 @@ singleton_implementation(ALXMPPTool)
 #pragma mark 连接建立成功
 - (void)xmppStreamDidConnect:(XMPPStream *)sender
 {
-    [self sendPwdToHost];
+    if(self.isRegisterOperation){ // 注册
+        NSError *error = nil;
+        NSString *registerPwd = [ALAccount shareAccount].registerPwd;
+        [_xmppStream registerWithPassword:registerPwd error:&error];
+        if (error) {
+            NSLog(@"%@",error);
+        }
+    }else{ // 登录
+        [self sendPwdToHost];
+    }
 }
 
 #pragma mark 登录成功
@@ -153,6 +171,21 @@ singleton_implementation(ALXMPPTool)
     }
 }
 
+#pragma mark 注册成功
+- (void)xmppStreamDidRegister:(XMPPStream *)sender
+{
+    if (_resultBlock) {
+        _resultBlock(XMPPResultTypeRegisterSuccess);
+    }
+}
+#pragma mark 注册失败
+- (void)xmppStream:(XMPPStream *)sender didNotRegister:(DDXMLElement *)error
+{
+    NSLog(@"错误 %@",error);
+    if (_resultBlock) {
+        _resultBlock(XMPPResultTypeRegisterFailure);
+    }
+}
 #pragma mark - 公共方法
 
 #pragma mark 用户登录
@@ -166,6 +199,21 @@ singleton_implementation(ALXMPPTool)
     
     // 连接服务开始登录的操作
     [self connectToHost];
+}
+
+#pragma mark 用户注册
+- (void)xmppRegister:(XMPPResultBlock)resultBlock
+{
+    // 不管什么情况，把以前的连接断开
+    [_xmppStream disconnect];
+    /*   注册步骤
+     1. 发送“注册JID”给服务器，请求一个长连接
+     2. 连接成功,发送注册密码
+    */
+    _resultBlock = resultBlock;
+    
+    [self connectToHost];
+    
 }
 
 #pragma mark 用户注销

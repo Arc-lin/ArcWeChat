@@ -28,7 +28,7 @@
     // 注销
     [[ALXMPPTool sharedALXMPPTool] xmppLogout];
 
-    // 注销的时候，吧沙盒的登录状态设置为NO
+    // 注销的时候，把沙盒的登录状态设置为NO
     [ALAccount shareAccount].login = NO;
     [[ALAccount shareAccount] saveToSandBox];
     

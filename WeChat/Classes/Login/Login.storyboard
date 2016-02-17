@@ -57,7 +57,7 @@
                                         <rect key="frame" x="135" y="203" width="30" height="30"/>
                                         <state key="normal" title="注册"/>
                                         <connections>
-                                            <segue destination="2dt-2j-6JG" kind="show" id="wlD-w7-GBS"/>
+                                            <segue destination="2dt-2j-6JG" kind="presentation" id="t9a-xL-1HR"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -113,7 +113,7 @@
         <!--注册-->
         <scene sceneID="kE2-CZ-0Zt">
             <objects>
-                <viewController id="afC-rB-XGZ" sceneMemberID="viewController">
+                <viewController id="afC-rB-XGZ" customClass="ALRegisterViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rPJ-au-G1j"/>
                         <viewControllerLayoutGuide type="bottom" id="aWl-ea-eYJ"/>
@@ -138,6 +138,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YmH-ph-NeQ">
                                         <rect key="frame" x="20" y="159" width="260" height="30"/>
                                         <state key="normal" title="注册"/>
+                                        <connections>
+                                            <action selector="registerBtnClick:" destination="afC-rB-XGZ" eventType="touchUpInside" id="sPK-5L-2sx"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -162,7 +165,22 @@
                             <constraint firstItem="HtG-WT-sZK" firstAttribute="centerX" secondItem="JkA-UK-k8O" secondAttribute="centerX" id="nTp-iN-04t"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="注册" id="66F-TK-yOZ"/>
+                    <navigationItem key="navigationItem" title="注册" id="66F-TK-yOZ">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="dPc-Pt-fiZ">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="R7s-se-F8n">
+                                <rect key="frame" x="20" y="7" width="50" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="取消"/>
+                                <connections>
+                                    <action selector="cancelBtnClick:" destination="afC-rB-XGZ" eventType="touchUpInside" id="F0n-Xd-N0w"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="pwdField" destination="jAz-eB-jNu" id="1RZ-ay-jG2"/>
+                        <outlet property="userfField" destination="Byb-Pe-riU" id="HWg-SS-gnh"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vP9-K5-Oal" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
