@@ -7,7 +7,6 @@
 //
 
 #import "ALXMPPTool.h"
-#import "XMPPFramework.h"
 
 /* 用户登录流程
  1.初始化XMPPStream
@@ -18,6 +17,8 @@
 @interface ALXMPPTool ()<XMPPStreamDelegate>{
     
     XMPPStream *_xmppStream; // 与服务器交互的核心类
+    
+    XMPPvCardAvatarModule *_avatar; // 电子名片的头像模块
     
     XMPPResultBlock _resultBlock; // 结果回调block
 }
@@ -56,6 +57,18 @@ singleton_implementation(ALXMPPTool)
 {
     // 创建XMPPStream对象
     _xmppStream = [[XMPPStream alloc] init];
+    
+    // 添加XMPP模块
+    // 1.添加电子名片模块
+    _vCardStorage = [XMPPvCardCoreDataStorage sharedInstance];
+    _vCard = [[XMPPvCardTempModule alloc] initWithvCardStorage:_vCardStorage];
+    // 激活
+    [_vCard activate:_xmppStream];
+    
+    // 电子名片模块还会配置"头像模块"一起使用
+    // 2.添加 头像模块
+    _avatar = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCard];
+    [_avatar activate:_xmppStream];
     
     // 设置代理 - 所有的代理方法都将在子线程被调用
     [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];

@@ -7,7 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "XMPPFramework.h"
+#import "DDTTYLogger.h"
+#import "DDList.h"
 
 /* 用户登录流程
  1.初始化XMPPStream
@@ -25,6 +26,10 @@
     
 //    [self setUpStream];
 //    [self connectToHost];
+    
+    // 配置XMPP的日志
+//    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    
     // 判断用户是否登录
     if ([ALAccount shareAccount].isLogin) {
         // 来到主界面
