@@ -157,6 +157,7 @@
 		35B19C7F1C7324310038E196 /* ALMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B19C7E1C7324310038E196 /* ALMeViewController.m */; };
 		35CCD8D41C74619E00E6F6E7 /* ALXMPPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CCD8D31C74619E00E6F6E7 /* ALXMPPTool.m */; };
 		35CCD8D81C746B6A00E6F6E7 /* ALRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CCD8D71C746B6A00E6F6E7 /* ALRegisterViewController.m */; };
+		35D2756B1C75F8890017B3BC /* ALProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D2756A1C75F8890017B3BC /* ALProfileViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -466,6 +467,8 @@
 		35CCD8D51C74631C00E6F6E7 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
 		35CCD8D61C746B6A00E6F6E7 /* ALRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALRegisterViewController.h; sourceTree = "<group>"; };
 		35CCD8D71C746B6A00E6F6E7 /* ALRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALRegisterViewController.m; sourceTree = "<group>"; };
+		35D275691C75F8890017B3BC /* ALProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALProfileViewController.h; sourceTree = "<group>"; };
+		35D2756A1C75F8890017B3BC /* ALProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALProfileViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1412,6 +1415,8 @@
 			children = (
 				35B19C7D1C7324310038E196 /* ALMeViewController.h */,
 				35B19C7E1C7324310038E196 /* ALMeViewController.m */,
+				35D275691C75F8890017B3BC /* ALProfileViewController.h */,
+				35D2756A1C75F8890017B3BC /* ALProfileViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1627,6 +1632,7 @@
 				350399561C6F6C71006B3EE6 /* XMPPRoomHybridStorage.m in Sources */,
 				350399531C6F6C71006B3EE6 /* XMPPRoomMessageCoreDataStorageObject.m in Sources */,
 				350399751C6F6C71006B3EE6 /* XMPPMessage+XEP_0085.m in Sources */,
+				35D2756B1C75F8890017B3BC /* ALProfileViewController.m in Sources */,
 				3503999B1C6F6C71006B3EE6 /* GCDAsyncSocket.m in Sources */,
 				350399621C6F6C71006B3EE6 /* XMPPvCardCoreDataStorageObject.m in Sources */,
 				350399A41C6F6C71006B3EE6 /* NSString+DDXML.m in Sources */,
