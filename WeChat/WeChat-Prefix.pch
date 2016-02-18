@@ -17,4 +17,13 @@
 #import "ALXMPPTool.h"
 #import "MBProgressHUD+HM.h"
 
+    // 自定义日志
+    #ifdef DEBUG
+
+        #define ALLog(...) NSLog(@"%s %@",__func__,[NSString stringWithFormat:__VA_ARGS__])
+
+    #else
+
+    #endif
+
 #endif

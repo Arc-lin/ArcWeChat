@@ -26,7 +26,7 @@
     
     // 1.判断有没有输入用户名和密码
     if (self.userField.text.length == 0 || self.pswField.text.length == 0) {
-        NSLog(@"请求输入用户名和密码");
+        ALLog(@"请求输入用户名和密码");
         return;
     }
     
@@ -71,7 +71,7 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         [MBProgressHUD hideHUD];
         if (resultType == XMPPResultTypeLoginSuccess) {
-            NSLog(@"登录成功 %s",__func__);
+            ALLog(@"登录成功");
             // 3.登录成功切换到主界面
 //            [self changeToMain];
             [UIStoryboard showInitialVCWithName:@"Main"];
@@ -83,7 +83,7 @@
             [[ALAccount shareAccount] saveToSandBox];
             
         }else{
-            NSLog(@"登录失败 %s",__func__);
+            ALLog(@"登录失败");
             [MBProgressHUD showError:@"用户名或者密码不正确"];
         }
     });

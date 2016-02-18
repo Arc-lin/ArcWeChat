@@ -12,6 +12,10 @@
 #define kPwdKey @"loginPwd"
 #define kLoginKey @"login"
 
+static NSString *domain = @"arclin.local";
+static NSString *host = @"127.0.0.1";
+static int port = 5222; 
+
 @implementation ALAccount
 
 + (instancetype)shareAccount
@@ -22,7 +26,6 @@
 #pragma mark 分配内存创建对象   单例模式
 + (instancetype)allocWithZone:(struct _NSZone *)zone
 {
-    NSLog(@"%s",__func__);
     static ALAccount *account;
     // 为了线程安全
     static dispatch_once_t onceToken;
@@ -51,4 +54,18 @@
     
 }
 
+- (NSString *)domain
+{
+    return domain;
+}
+
+- (NSString *)host
+{
+    return host;
+}
+
+- (int)port
+{
+    return port;
+}
 @end

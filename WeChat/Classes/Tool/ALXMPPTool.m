@@ -70,35 +70,35 @@ singleton_implementation(ALXMPPTool)
     }
     
     XMPPJID *myJid = nil;
-    
+    ALAccount *account = [ALAccount shareAccount];
     if (self.isRegisterOperation) {
-        NSString *registerUser = [ALAccount shareAccount].registerUser;
-        myJid = [XMPPJID jidWithUser:registerUser domain:@"arclin.local" resource:nil];
+        NSString *registerUser = account.registerUser;
+        myJid = [XMPPJID jidWithUser:registerUser domain:account.domain resource:nil];
     }else{ // 登录操作
         // 1.设置登录用户的JID
         // resource 用户登陆客户端设备登录的类型
         NSString *loginUser = [ALAccount shareAccount].loginUser;
         //    NSString *user = [[NSUserDefaults standardUserDefaults] objectForKey:@"user"];
-        myJid = [XMPPJID jidWithUser:loginUser domain:@"arclin.local" resource:nil];
+        myJid = [XMPPJID jidWithUser:loginUser domain:account.domain resource:nil];
         
     }
     
     _xmppStream.myJID = myJid;
     
     // 2.设置主机地址
-    _xmppStream.hostName = @"127.0.0.1";
+    _xmppStream.hostName = account.host;
     
-    // 3.设置主机端口号
-    _xmppStream.hostPort = 5222;
+    // 3.设置主机端口号(默认是5222，可以不用设置)
+    _xmppStream.hostPort = account.port;
     
     // 4.发起连接
     NSError *error = nil;
     // 缺少必要的参数时就回发起连接失败 ？ 没有设置JID
     [_xmppStream connectWithTimeout:XMPPStreamTimeoutNone error:&error];
     if (error) {
-        NSLog(@"%@",error);
+        ALLog(@"%@",error);
     }else{
-        NSLog(@"发起连接成功");
+        ALLog(@"发起连接成功");
     }
     
 }
@@ -115,9 +115,9 @@ singleton_implementation(ALXMPPTool)
     NSString *pwd = [ALAccount shareAccount].loginPwd;
     [_xmppStream authenticateWithPassword:pwd error:nil];
     if (error) {
-        NSLog(@"%@",error);
+        ALLog(@"%@",error);
     }else{
-        NSLog(@"发送密码成功");
+        ALLog(@"发送密码成功");
     }
 }
 
@@ -125,7 +125,7 @@ singleton_implementation(ALXMPPTool)
 {
     // XMPP框架，已经把所有的指令封装成对象
     XMPPPresence *presence = [XMPPPresence presence];
-    NSLog(@"%@",presence);
+    ALLog(@"%@",presence);
     [_xmppStream sendElement:presence];
 }
 
@@ -143,7 +143,7 @@ singleton_implementation(ALXMPPTool)
         NSString *registerPwd = [ALAccount shareAccount].registerPwd;
         [_xmppStream registerWithPassword:registerPwd error:&error];
         if (error) {
-            NSLog(@"%@",error);
+            ALLog(@"%@",error);
         }
     }else{ // 登录
         [self sendPwdToHost];
@@ -164,7 +164,7 @@ singleton_implementation(ALXMPPTool)
 #pragma mark 登录失败
 - (void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(DDXMLElement *)error
 {
-    NSLog(@"失败 %@",error);
+    ALLog(@"失败 %@",error);
     // 回调resultBlock
     if(_resultBlock){
         _resultBlock(XMPPResultTypeLoginFailure);
@@ -181,7 +181,7 @@ singleton_implementation(ALXMPPTool)
 #pragma mark 注册失败
 - (void)xmppStream:(XMPPStream *)sender didNotRegister:(DDXMLElement *)error
 {
-    NSLog(@"错误 %@",error);
+    ALLog(@"错误 %@",error);
     if (_resultBlock) {
         _resultBlock(XMPPResultTypeRegisterFailure);
     }
