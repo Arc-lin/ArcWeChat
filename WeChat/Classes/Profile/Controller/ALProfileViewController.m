@@ -7,9 +7,10 @@
 //
 
 #import "ALProfileViewController.h"
+#import "ALEditVCardViewController.h"
 #import "XMPPvCardTemp.h"
 
-@interface ALProfileViewController ()
+@interface ALProfileViewController ()<ALEditVCardViewControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;// 头像
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;// 昵称
@@ -62,6 +63,71 @@
     // 使用mailer充当
     self.emailLabel.text = myvCard.mailer;
 
+}
+
+#pragma mark 表格选择
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    // 根据cell不同tag进行相应的操作
+    /**
+     *  tag = 0 换头像
+     *  tag = 1 进行到下一个控制器
+     *  tag=  2 不做任何操作
+     */
+    
+    // 获取cell
+    UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
+    switch (selectedCell.tag) {
+        case 0:
+            
+            break;
+        case 1:
+            [self performSegueWithIdentifier:@"toEditVcSegue" sender:selectedCell];
+            break;
+            
+        case 2:
+            
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    // 获取目标控制器
+    id destVc = segue.destinationViewController;
+    
+    // 设置编辑电子名片控制器的cell属性
+    if ([destVc isKindOfClass:[ALEditVCardViewController class]]) {
+        ALEditVCardViewController *editVc = destVc;
+        editVc.cell = sender;
+        // 设置代理
+        editVc.delegate = self;
+    }
+}
+
+#pragma mark 编辑电子名片控制器的代理
+- (void)editVCardViewController:(ALEditVCardViewController *)editVc didFinishedSave:(id)sender
+{
+    // 获取当前的电子名片
+    XMPPvCardTemp *myVCard = [ALXMPPTool sharedALXMPPTool].vCard.myvCardTemp;
+    
+    // 重新设置myVCard里的属性
+    myVCard.nickname = self.nicknameLabel.text;
+    myVCard.orgName = self.orgNameLabel.text;
+    if (self.departmentLabel.text) {
+        myVCard.orgUnits = @[self.departmentLabel.text];
+    }
+    myVCard.title = self.titleLabel.text;
+    myVCard.note = self.telLabel.text;
+    myVCard.mailer = self.emailLabel.text;
+    
+    // 把数据保存到服务器
+    // 内部实现原理是把整个电子名片重新上传了一遍，包括图片
+    [[ALXMPPTool sharedALXMPPTool].vCard updateMyvCardTemp:myVCard];
+    
+    ALLog(@"修改成功");
 }
 
 - (void)didReceiveMemoryWarning {

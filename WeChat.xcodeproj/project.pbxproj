@@ -158,6 +158,7 @@
 		35CCD8D41C74619E00E6F6E7 /* ALXMPPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CCD8D31C74619E00E6F6E7 /* ALXMPPTool.m */; };
 		35CCD8D81C746B6A00E6F6E7 /* ALRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CCD8D71C746B6A00E6F6E7 /* ALRegisterViewController.m */; };
 		35D2756B1C75F8890017B3BC /* ALProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D2756A1C75F8890017B3BC /* ALProfileViewController.m */; };
+		35D902451C76C19C003C6D10 /* ALEditVCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D902441C76C19C003C6D10 /* ALEditVCardViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -469,6 +470,8 @@
 		35CCD8D71C746B6A00E6F6E7 /* ALRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALRegisterViewController.m; sourceTree = "<group>"; };
 		35D275691C75F8890017B3BC /* ALProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALProfileViewController.h; sourceTree = "<group>"; };
 		35D2756A1C75F8890017B3BC /* ALProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALProfileViewController.m; sourceTree = "<group>"; };
+		35D902431C76C19C003C6D10 /* ALEditVCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALEditVCardViewController.h; sourceTree = "<group>"; };
+		35D902441C76C19C003C6D10 /* ALEditVCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALEditVCardViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1417,6 +1420,8 @@
 				35B19C7E1C7324310038E196 /* ALMeViewController.m */,
 				35D275691C75F8890017B3BC /* ALProfileViewController.h */,
 				35D2756A1C75F8890017B3BC /* ALProfileViewController.m */,
+				35D902431C76C19C003C6D10 /* ALEditVCardViewController.h */,
+				35D902441C76C19C003C6D10 /* ALEditVCardViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1546,6 +1551,7 @@
 				350399551C6F6C71006B3EE6 /* XMPPRoomHybrid.xcdatamodeld in Sources */,
 				353B59201C72ECC300A72BC2 /* MBProgressHUD.m in Sources */,
 				353B59301C72F14600A72BC2 /* UIImage+WF.m in Sources */,
+				35D902451C76C19C003C6D10 /* ALEditVCardViewController.m in Sources */,
 				350399491C6F6C71006B3EE6 /* XMPPRoster.m in Sources */,
 				350399981C6F6C71006B3EE6 /* XMPPIDTracker.m in Sources */,
 				350399731C6F6C71006B3EE6 /* NSDate+XMPPDateTimeProfiles.m in Sources */,
