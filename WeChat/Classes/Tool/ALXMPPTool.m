@@ -14,6 +14,9 @@
  3.连接成功，接着发送密码
  4.发送一个 "在线消息" 请求给服务器,默认登录成功是不在线的 -> 可以通知其他用户你上线
  */
+
+// 花名册数据库里的好友，如果使用新用户登录，会把以前登录用户的好友删除掉
+
 @interface ALXMPPTool ()<XMPPStreamDelegate>{
     
     XMPPStream *_xmppStream; // 与服务器交互的核心类
@@ -70,9 +73,39 @@ singleton_implementation(ALXMPPTool)
     _avatar = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_vCard];
     [_avatar activate:_xmppStream];
     
+    // 3.添加花名册模块
+    _rosterStorage = [[XMPPRosterCoreDataStorage alloc] init];
+    _roster = [[XMPPRoster alloc] initWithRosterStorage:_rosterStorage];
+    [_roster activate:_xmppStream];
+    
     // 设置代理 - 所有的代理方法都将在子线程被调用
     [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
     
+}
+
+/**
+ *  释放资源
+ */
+- (void)teardownStream
+{
+    // 移除代理
+    [_xmppStream removeDelegate:self];
+    
+    // 取消模块
+    [_avatar deactivate];
+    [_vCard deactivate];
+    [_roster deactivate];
+    
+    // 断开连接
+    [_xmppStream disconnect];
+    
+    // 清空资源
+    _vCardStorage = nil;
+    _vCard = nil;
+    _avatar = nil;
+    _roster = nil;
+    _rosterStorage = nil;
+    _xmppStream = nil;
 }
 
 - (void)connectToHost
@@ -236,5 +269,10 @@ singleton_implementation(ALXMPPTool)
     [self sendOffline];
     // 2. 断开与服务器的连接
     [self disconnectFromHost];
+}
+
+- (void)dealloc
+{
+    [self teardownStream];
 }
 @end

@@ -34,6 +34,10 @@ singleton_interface(ALXMPPTool)
  */
 @property (nonatomic,assign,getter=isRegisterOperation) BOOL registerOperation;
 
+
+@property (nonatomic,strong,readonly) XMPPRoster *roster; // 花名册
+@property (nonatomic,strong,readonly) XMPPRosterCoreDataStorage *rosterStorage; // 花名册数据存储
+
 /**
  *  XMPP用户登录
  */

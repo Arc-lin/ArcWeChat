@@ -32,10 +32,10 @@
 //#import "XMPPCoreDataStorage.h"
 //
 //#import "XMPPReconnect.h"
-//
-//#import "XMPPRoster.h"
+// 花名册模块
+#import "XMPPRoster.h"
 //#import "XMPPRosterMemoryStorage.h"
-//#import "XMPPRosterCoreDataStorage.h"
+#import "XMPPRosterCoreDataStorage.h"
 //
 //#import "XMPPJabberRPCModule.h"
 //#import "XMPPIQ+JabberRPC.h"
