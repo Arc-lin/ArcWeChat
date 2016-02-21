@@ -20,6 +20,8 @@
  */
 @property (weak, nonatomic) IBOutlet UILabel *wechatNumberLabel;
 
+@property (nonatomic,strong) XMPPvCardTemp *myvCard;
+
 @end
 
 @implementation ALMeViewController
@@ -31,11 +33,11 @@
     
     // 从数据库里取用户信息
     // 获取登录用户信息的，使用电子名片模块
-    XMPPvCardTemp *myvCard = [ALXMPPTool sharedALXMPPTool].vCard.myvCardTemp;
+    self.myvCard = [ALXMPPTool sharedALXMPPTool].vCard.myvCardTemp;
     
     // 获取头像
-    if (myvCard.photo) {
-        self.avatarImageView.image = [UIImage imageWithData:myvCard.photo];
+    if (self.myvCard.photo) {
+        self.avatarImageView.image = [UIImage imageWithData:self.myvCard.photo];
     }
     
     // 微信号（显示用户名）
@@ -43,6 +45,16 @@
 //    self.wechatNumberLabel.text = myvCard.jid.user; 此行不可行
     self.wechatNumberLabel.text = [@"微信号:" stringByAppendingString:[ALAccount shareAccount].loginUser];
 }
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    ALLog(@"");
+    // 获取头像
+    if (self.myvCard.photo) {
+        self.avatarImageView.image = [UIImage imageWithData:self.myvCard.photo];
+    }
+}
+
 - (IBAction)logoutBtnClick:(id)sender {
     
     // 注销

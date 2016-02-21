@@ -10,7 +10,7 @@
 #import "ALEditVCardViewController.h"
 #import "XMPPvCardTemp.h"
 
-@interface ALProfileViewController ()<ALEditVCardViewControllerDelegate>
+@interface ALProfileViewController ()<ALEditVCardViewControllerDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *avatarImageView;// 头像
 @property (weak, nonatomic) IBOutlet UILabel *nicknameLabel;// 昵称
@@ -79,7 +79,7 @@
     UITableViewCell *selectedCell = [tableView cellForRowAtIndexPath:indexPath];
     switch (selectedCell.tag) {
         case 0:
-            
+            [self choseImg];
             break;
         case 1:
             [self performSegueWithIdentifier:@"toEditVcSegue" sender:selectedCell];
@@ -91,6 +91,51 @@
         default:
             break;
     }
+}
+
+- (void)choseImg
+{
+    UIActionSheet *sheel = [[UIActionSheet alloc] initWithTitle:@"请选择" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:@"照相" otherButtonTitles:@"图片框", nil];
+    [sheel showInView:self.view];
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 2) return;
+    
+    // 图片选择器
+    UIImagePickerController *imgPc = [[UIImagePickerController alloc] init];
+    
+    // 设置代理
+    imgPc.delegate = self;
+    
+    // 允许编辑图片
+    imgPc.allowsEditing = YES;
+
+    if (buttonIndex == 0) { // 照相
+        imgPc.sourceType = UIImagePickerControllerSourceTypeCamera;
+    }else{ // 图片库
+        imgPc.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    // 显示控制器
+    [self presentViewController:imgPc animated:YES completion:nil];
+}
+
+#pragma mark 图片选择器的代理
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    // 获取修改后的图片
+    UIImage *editedImg = info[UIImagePickerControllerEditedImage];
+    
+    // 更改cell里的图片
+    self.avatarImageView.image = editedImg;
+    
+    // 移除图片选择控制器
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+    // 把新的图片保存到服务器
+    [self editVCardViewController:nil didFinishedSave:nil];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -113,6 +158,10 @@
     // 获取当前的电子名片
     XMPPvCardTemp *myVCard = [ALXMPPTool sharedALXMPPTool].vCard.myvCardTemp;
     
+    // 重新设置头像
+    // 1.0 表示原图上传
+    myVCard.photo = UIImageJPEGRepresentation(self.avatarImageView.image, 1.0);
+    
     // 重新设置myVCard里的属性
     myVCard.nickname = self.nicknameLabel.text;
     myVCard.orgName = self.orgNameLabel.text;
@@ -122,7 +171,7 @@
     myVCard.title = self.titleLabel.text;
     myVCard.note = self.telLabel.text;
     myVCard.mailer = self.emailLabel.text;
-    
+
     // 把数据保存到服务器
     // 内部实现原理是把整个电子名片重新上传了一遍，包括图片
     [[ALXMPPTool sharedALXMPPTool].vCard updateMyvCardTemp:myVCard];
