@@ -84,10 +84,6 @@
         case 1:
             [self performSegueWithIdentifier:@"toEditVcSegue" sender:selectedCell];
             break;
-            
-        case 2:
-            
-            break;
         default:
             break;
     }
@@ -113,7 +109,12 @@
     imgPc.allowsEditing = YES;
 
     if (buttonIndex == 0) { // 照相
-        imgPc.sourceType = UIImagePickerControllerSourceTypeCamera;
+        if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) { // 可以打开相机
+            imgPc.sourceType = UIImagePickerControllerSourceTypeCamera;
+        }else{
+            [MBProgressHUD showError:@"摄像头被占用或损坏"];
+            return;
+        }
     }else{ // 图片库
         imgPc.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     }

@@ -26,6 +26,8 @@ typedef void (^XMPPResultBlock)(XMPPResultType);
 
 singleton_interface(ALXMPPTool)
 
+
+@property (nonatomic,strong,readonly) XMPPStream *xmppStream; // 与服务器交互的核心类
 @property (nonatomic,strong,readonly) XMPPvCardTempModule *vCard; // 电子名片模块
 @property (nonatomic,strong,readonly) XMPPvCardCoreDataStorage *vCardStorage; // 电子名片数据存储
 /**
@@ -34,7 +36,7 @@ singleton_interface(ALXMPPTool)
  */
 @property (nonatomic,assign,getter=isRegisterOperation) BOOL registerOperation;
 
-
+@property (nonatomic,strong,readonly) XMPPvCardAvatarModule *avatar; // 电子名片的头像模块
 @property (nonatomic,strong,readonly) XMPPRoster *roster; // 花名册
 @property (nonatomic,strong,readonly) XMPPRosterCoreDataStorage *rosterStorage; // 花名册数据存储
 

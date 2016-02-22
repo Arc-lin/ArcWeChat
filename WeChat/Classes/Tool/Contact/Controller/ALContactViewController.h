@@ -10,4 +10,6 @@
 
 @interface ALContactViewController : UITableViewController
 
+- (void)deleteNoneContact;
+
 @end

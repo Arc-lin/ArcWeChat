@@ -19,11 +19,8 @@
 
 @interface ALXMPPTool ()<XMPPStreamDelegate>{
     
-    XMPPStream *_xmppStream; // 与服务器交互的核心类
-    
-    XMPPvCardAvatarModule *_avatar; // 电子名片的头像模块
-    
     XMPPResultBlock _resultBlock; // 结果回调block
+
 }
 /**
  *   1.初始化XMPPStream
