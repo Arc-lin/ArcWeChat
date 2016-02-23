@@ -79,6 +79,9 @@
                             </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <segue destination="xXx-jW-yjZ" kind="show" identifier="toChatVcSegue" id="zsx-u1-tHn"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="H5E-yS-mHv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -144,7 +147,103 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lke-FB-pSi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2473" y="619"/>
+            <point key="canvasLocation" x="2472" y="149"/>
+        </scene>
+        <!--聊天界面-->
+        <scene sceneID="05v-Je-h56">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="xXx-jW-yjZ" customClass="ALChatViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="m10-cc-dky"/>
+                        <viewControllerLayoutGuide type="bottom" id="S6r-GL-ROE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="SGH-Fh-Azv">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ujj-BO-eLp" userLabel="输入框容器">
+                                <rect key="frame" x="0.0" y="554" width="600" height="46"/>
+                                <subviews>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WTe-L9-b7t" userLabel="输入框">
+                                        <rect key="frame" x="10" y="8" width="525" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" returnKeyType="send"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="xXx-jW-yjZ" id="Y0Z-Ye-uGb"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzh-jm-aJj">
+                                        <rect key="frame" x="540" y="8" width="50" height="30"/>
+                                        <color key="backgroundColor" red="0.2255896214098321" green="0.59107827240566035" blue="0.35234609952592655" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="ABd-b3-Y4O"/>
+                                            <constraint firstAttribute="width" constant="50" id="cAT-9a-Npv"/>
+                                        </constraints>
+                                        <state key="normal" title="发送">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="sendBtnClick:" destination="xXx-jW-yjZ" eventType="touchUpInside" id="c0u-vt-EJT"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstItem="xzh-jm-aJj" firstAttribute="leading" secondItem="WTe-L9-b7t" secondAttribute="trailing" constant="5" id="AvR-83-aPm"/>
+                                    <constraint firstAttribute="trailing" secondItem="xzh-jm-aJj" secondAttribute="trailing" constant="10" id="NEU-3V-wAV"/>
+                                    <constraint firstAttribute="height" constant="46" id="iwT-2g-rDD"/>
+                                    <constraint firstItem="xzh-jm-aJj" firstAttribute="centerY" secondItem="Ujj-BO-eLp" secondAttribute="centerY" id="m2X-6f-MQi"/>
+                                    <constraint firstItem="WTe-L9-b7t" firstAttribute="leading" secondItem="Ujj-BO-eLp" secondAttribute="leading" constant="10" id="sav-Pv-GOl"/>
+                                    <constraint firstItem="WTe-L9-b7t" firstAttribute="centerY" secondItem="Ujj-BO-eLp" secondAttribute="centerY" id="zs0-Fc-qiC"/>
+                                </constraints>
+                            </view>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" showsSelectionImmediatelyOnTouchBegin="NO" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="iVR-T2-bML">
+                                <rect key="frame" x="0.0" y="64" width="600" height="487"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ChatCell" id="Z2h-MW-Y2H">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Z2h-MW-Y2H" id="o3Y-ja-EZd">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <sections/>
+                                <connections>
+                                    <outlet property="dataSource" destination="xXx-jW-yjZ" id="ouU-rL-RYJ"/>
+                                    <outlet property="delegate" destination="xXx-jW-yjZ" id="zj5-lH-qOH"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="bottomMargin" secondItem="Ujj-BO-eLp" secondAttribute="bottom" id="1YQ-FL-5fZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ujj-BO-eLp" secondAttribute="trailing" constant="-20" id="Dk4-6k-WTa"/>
+                            <constraint firstItem="S6r-GL-ROE" firstAttribute="top" secondItem="iVR-T2-bML" secondAttribute="bottom" id="dsB-Rk-sEE"/>
+                            <constraint firstItem="iVR-T2-bML" firstAttribute="leading" secondItem="SGH-Fh-Azv" secondAttribute="leadingMargin" constant="-20" id="emX-Sz-tX2"/>
+                            <constraint firstItem="Ujj-BO-eLp" firstAttribute="top" secondItem="iVR-T2-bML" secondAttribute="bottom" constant="3" id="fJO-b0-teX"/>
+                            <constraint firstItem="iVR-T2-bML" firstAttribute="top" secondItem="m10-cc-dky" secondAttribute="bottom" id="oJQ-rT-zoC"/>
+                            <constraint firstItem="Ujj-BO-eLp" firstAttribute="leading" secondItem="SGH-Fh-Azv" secondAttribute="leadingMargin" constant="-20" id="raY-2h-ouO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iVR-T2-bML" secondAttribute="trailing" constant="-20" id="ykZ-Hi-Nlb"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="dsB-Rk-sEE"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <navigationItem key="navigationItem" title="聊天界面" id="4zx-xu-1Ll"/>
+                    <connections>
+                        <outlet property="bottomConstraint" destination="1YQ-FL-5fZ" id="AAx-eh-FJQ"/>
+                        <outlet property="tableView" destination="iVR-T2-bML" id="nn7-l5-zFO"/>
+                        <outlet property="textField" destination="WTe-L9-b7t" id="64v-cV-hSw"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Xw5-YJ-Gei" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2471" y="814"/>
         </scene>
         <!--发现-->
         <scene sceneID="Q6Z-k9-jX5">
@@ -679,6 +778,6 @@
         <image name="tabbar_meHL" width="23" height="23"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="a6Y-BN-Tl9"/>
+        <segue reference="JiT-Vj-CVz"/>
     </inferredMetricsTieBreakers>
 </document>

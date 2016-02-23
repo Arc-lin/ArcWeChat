@@ -30,6 +30,9 @@ singleton_interface(ALXMPPTool)
 @property (nonatomic,strong,readonly) XMPPStream *xmppStream; // 与服务器交互的核心类
 @property (nonatomic,strong,readonly) XMPPvCardTempModule *vCard; // 电子名片模块
 @property (nonatomic,strong,readonly) XMPPvCardCoreDataStorage *vCardStorage; // 电子名片数据存储
+@property (nonatomic,strong,readonly) XMPPMessageArchiving *msgArchiving; // 消息模块
+@property (nonatomic,strong,readonly) XMPPMessageArchivingCoreDataStorage *msgArchivingStorage;// 消息数据存储
+
 /**
  *  标识 连接到服务器 到底是 "登录连接" 还是 "注册连接"
  *  NO 代表登录操作  Yes 代表注册操作

@@ -156,6 +156,7 @@
 		354EB3C81C71842B00B8EB9B /* ALLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 354EB3C71C71842B00B8EB9B /* ALLoginViewController.m */; };
 		356337201C7AF9840076FBE2 /* ALAddContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3563371F1C7AF9840076FBE2 /* ALAddContactViewController.m */; };
 		35B19C7F1C7324310038E196 /* ALMeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B19C7E1C7324310038E196 /* ALMeViewController.m */; };
+		35B28A041C7C417E00892675 /* ALChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35B28A031C7C417E00892675 /* ALChatViewController.m */; };
 		35CCD8D41C74619E00E6F6E7 /* ALXMPPTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CCD8D31C74619E00E6F6E7 /* ALXMPPTool.m */; };
 		35CCD8D81C746B6A00E6F6E7 /* ALRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35CCD8D71C746B6A00E6F6E7 /* ALRegisterViewController.m */; };
 		35D2756B1C75F8890017B3BC /* ALProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 35D2756A1C75F8890017B3BC /* ALProfileViewController.m */; };
@@ -467,6 +468,8 @@
 		3563371F1C7AF9840076FBE2 /* ALAddContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALAddContactViewController.m; sourceTree = "<group>"; };
 		35B19C7D1C7324310038E196 /* ALMeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALMeViewController.h; sourceTree = "<group>"; };
 		35B19C7E1C7324310038E196 /* ALMeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALMeViewController.m; sourceTree = "<group>"; };
+		35B28A021C7C417E00892675 /* ALChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALChatViewController.h; sourceTree = "<group>"; };
+		35B28A031C7C417E00892675 /* ALChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALChatViewController.m; sourceTree = "<group>"; };
 		35CCD8D21C74619E00E6F6E7 /* ALXMPPTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ALXMPPTool.h; sourceTree = "<group>"; };
 		35CCD8D31C74619E00E6F6E7 /* ALXMPPTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ALXMPPTool.m; sourceTree = "<group>"; };
 		35CCD8D51C74631C00E6F6E7 /* Singleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Singleton.h; sourceTree = "<group>"; };
@@ -713,7 +716,7 @@
 				350398A71C6F6C70006B3EE6 /* XEP-0100 */,
 				350398AA1C6F6C70006B3EE6 /* XEP-0106 */,
 				350398AD1C6F6C70006B3EE6 /* XEP-0115 */,
-				350398B81C6F6C70006B3EE6 /* XEP-0136 */,
+				350398B81C6F6C70006B3EE6 /* XEP-0136[消息模块] */,
 				350398C41C6F6C71006B3EE6 /* XEP-0153 */,
 				350398C71C6F6C71006B3EE6 /* XEP-0172 */,
 				350398CC1C6F6C71006B3EE6 /* XEP-0184 */,
@@ -1077,13 +1080,14 @@
 			path = CoreDataStorage;
 			sourceTree = "<group>";
 		};
-		350398B81C6F6C70006B3EE6 /* XEP-0136 */ = {
+		350398B81C6F6C70006B3EE6 /* XEP-0136[消息模块] */ = {
 			isa = PBXGroup;
 			children = (
 				350398B91C6F6C70006B3EE6 /* CoreDataStorage */,
 				350398C21C6F6C71006B3EE6 /* XMPPMessageArchiving.h */,
 				350398C31C6F6C71006B3EE6 /* XMPPMessageArchiving.m */,
 			);
+			name = "XEP-0136[消息模块]";
 			path = "XEP-0136";
 			sourceTree = "<group>";
 		};
@@ -1459,6 +1463,8 @@
 				35D74E151C79B0D400E7AFAD /* ALContactViewController.m */,
 				3563371E1C7AF9840076FBE2 /* ALAddContactViewController.h */,
 				3563371F1C7AF9840076FBE2 /* ALAddContactViewController.m */,
+				35B28A021C7C417E00892675 /* ALChatViewController.h */,
+				35B28A031C7C417E00892675 /* ALChatViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -1562,6 +1568,7 @@
 				3503994C1C6F6C71006B3EE6 /* XMPPIQ+JabberRPCResonse.m in Sources */,
 				3503992C1C6F6C71006B3EE6 /* XMPPDeprecatedPlainAuthentication.m in Sources */,
 				350399A61C6F6C71006B3EE6 /* DDXMLElement.m in Sources */,
+				35B28A041C7C417E00892675 /* ALChatViewController.m in Sources */,
 				356337201C7AF9840076FBE2 /* ALAddContactViewController.m in Sources */,
 				350399831C6F6C71006B3EE6 /* XMPPvCardAvatarModule.m in Sources */,
 				350399611C6F6C71006B3EE6 /* XMPPvCardCoreDataStorage.m in Sources */,

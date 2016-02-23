@@ -7,6 +7,7 @@
 //
 
 #import "ALContactViewController.h"
+#import "ALChatViewController.h"
 
 @interface ALContactViewController ()<NSFetchedResultsControllerDelegate>{
     NSFetchedResultsController *_resultContr;
@@ -157,6 +158,24 @@
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
     [self.tableView reloadData];
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    XMPPJID *friendJid = [_resultContr.fetchedObjects[indexPath.row] jid];
+    // 进入聊天控制器
+    [self performSegueWithIdentifier:@"toChatVcSegue" sender:friendJid];
+
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    id destVc = segue.destinationViewController;
+    if ([destVc isKindOfClass:[ALChatViewController class]]) {
+        ALChatViewController *chatVc = destVc;
+        chatVc.friendJid = sender;
+    }
 }
 
 #pragma mark - 结果控制器的代理

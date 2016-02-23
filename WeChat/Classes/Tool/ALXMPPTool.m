@@ -75,6 +75,11 @@ singleton_implementation(ALXMPPTool)
     _roster = [[XMPPRoster alloc] initWithRosterStorage:_rosterStorage];
     [_roster activate:_xmppStream];
     
+    // 4.添加消息模块
+    _msgArchivingStorage = [[XMPPMessageArchivingCoreDataStorage alloc] init];
+    _msgArchiving = [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:_msgArchivingStorage];
+    [_msgArchiving activate:_xmppStream];
+    
     // 设置代理 - 所有的代理方法都将在子线程被调用
     [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
     
@@ -92,11 +97,14 @@ singleton_implementation(ALXMPPTool)
     [_avatar deactivate];
     [_vCard deactivate];
     [_roster deactivate];
+    [_msgArchiving deactivate];
     
     // 断开连接
     [_xmppStream disconnect];
     
     // 清空资源
+    _msgArchiving = nil;
+    _msgArchivingStorage = nil;
     _vCardStorage = nil;
     _vCard = nil;
     _avatar = nil;
