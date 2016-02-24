@@ -7,12 +7,15 @@
 //
 
 #import "ALChatViewController.h"
+#import "XMPPvCardTemp.h"
 
-@interface ALChatViewController ()<NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate>
+@interface ALChatViewController ()<NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSFetchedResultsController *_resultContr;
 }
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UIButton *imageChoose;
+@property (weak, nonatomic) IBOutlet UIButton *msgSend;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
 /**
  *  输入框容器距离底部的约束
@@ -29,7 +32,7 @@
     // 添加键盘通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kbWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(kbWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChange) name:UITextFieldTextDidChangeNotification object:nil];
     // 加载数据库的聊天数据
     // 1.上下文
     NSManagedObjectContext *msgContext = [ALXMPPTool sharedALXMPPTool].msgArchivingStorage.mainThreadManagedObjectContext;
@@ -66,8 +69,23 @@
 - (void)rollToBottom
 {
     // 表格滚动到底部
-    NSIndexPath *lastIndex = [NSIndexPath indexPathForRow:_resultContr.fetchedObjects.count - 1 inSection:0];
-    [self.tableView scrollToRowAtIndexPath:lastIndex atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    if (_resultContr.fetchedObjects.count > 1) {
+        ALLog(@"%lu",_resultContr.fetchedObjects.count);
+        NSIndexPath *lastIndex = [NSIndexPath indexPathForRow:_resultContr.fetchedObjects.count - 1 inSection:0];
+        [self.tableView scrollToRowAtIndexPath:lastIndex atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+    }
+}
+// 监听textView的值的变化
+- (void)textChange
+{
+    // 判断下textView有没有内容
+    if (_textField.text.length) { // 有内容
+        self.msgSend.hidden = NO;
+        self.imageChoose.hidden = YES;
+    }else{
+        self.msgSend.hidden = YES;
+        self.imageChoose.hidden = NO;
+    }
 }
 #pragma mark -tableView DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -83,10 +101,44 @@
     // 获取聊天信息
     XMPPMessageArchiving_Message_CoreDataObject *msgObj = _resultContr.fetchedObjects[indexPath.row];
     
-    cell.textLabel.text = msgObj.body;
+    // 判断消息的类型，有没有附件
+    // 1. 获取原始的xml数据
+    XMPPMessage *message = msgObj.message;
     
-    NSData *imageData = [[ALXMPPTool sharedALXMPPTool].avatar photoDataForJID:self.friendJid];
-    cell.imageView.image = [UIImage imageWithData:imageData];
+    // 获取附件的类型
+    NSString *bodyType = [message attributeStringValueForName:@"bodyType"];
+    
+    if ([bodyType isEqualToString:@"image"]) { // 图片
+            // 2.遍历message的子节点
+            NSArray *child = message.children;
+            for (XMPPElement *note in child) {
+                // 获取节点的名字
+                if ([[note name] isEqualToString:@"attachment"]) {
+                    ALLog(@"获取到附件");
+                    // 获取附件字符串，然后转成NSData,再转成图片
+                    NSString *imgBase64Str = [note stringValue];
+                    NSData *imgData = [[NSData alloc] initWithBase64EncodedString:imgBase64Str options:0];
+                    UIImage *img = [UIImage imageWithData:imgData];
+                    UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake(150, 0, 100, 100)];
+                    imgV.contentMode = UIViewContentModeScaleAspectFill;
+                    imgV.clipsToBounds = YES;
+                    imgV.image = img;
+                    [cell addSubview:imgV];
+                }
+            }
+    }else if([bodyType isEqualToString:@"sound"]){ // 音频
+    
+    }else{ // 纯文本
+        cell.textLabel.text = msgObj.body;
+    }
+    
+    if (msgObj.thread) {
+        NSData *imageData = [[ALXMPPTool sharedALXMPPTool].avatar photoDataForJID:self.friendJid];
+        cell.imageView.image = [UIImage imageWithData:imageData];
+    }else{
+        NSData *imageData  = [ALXMPPTool sharedALXMPPTool].vCard.myvCardTemp.photo;
+        cell.imageView.image = [UIImage imageWithData:imageData];
+    }
    
     cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",msgObj.timestamp];
     
@@ -119,7 +171,6 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [self sendMsg];
-    
     return YES;
 }
 - (void)sendMsg
@@ -135,6 +186,51 @@
         self.textField.text = nil;
     }
 }
+
+#pragma mark 文件发送（图片为例）
+- (IBAction)imgChooseBtnClick:(id)sender {
+    // 从图片库选取图片
+    UIImagePickerController *imgPc = [[UIImagePickerController alloc] init];
+    imgPc.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    imgPc.delegate = self;
+    
+    [self presentViewController:imgPc animated:YES completion:nil];
+
+}
+#pragma mark 用户选择的图片
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    UIImage *img = info[UIImagePickerControllerOriginalImage];
+    
+    // 发送附件
+    [self sendAttachmentWithData:UIImagePNGRepresentation(img) bodyType:@"image"];
+    
+    // 隐藏图片选择控制器
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark 发送附件
+- (void)sendAttachmentWithData:(NSData *)data bodyType:(NSString *)bodyType{
+    
+    // 发送附件
+    XMPPMessage *msg = [XMPPMessage messageWithType:@"chat" to:self.friendJid];
+    
+    [msg addAttributeWithName:@"bodyType" stringValue:bodyType];
+    // 没有body则不识别为message，所以添加body
+    [msg addBody:bodyType];
+    
+    // 把附件经过“base64编码”转成字符串
+    NSString *base64Str = [data base64EncodedStringWithOptions:0];
+    
+    // 定义附件
+    XMPPElement *attachment = [XMPPElement elementWithName:@"attachment" stringValue:base64Str];
+    
+    // 添加字节点
+    [msg addChild:attachment];
+    
+    [[ALXMPPTool sharedALXMPPTool].xmppStream sendElement:msg];
+}
+
 #pragma mark 表格滚动，隐藏键盘
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
@@ -145,7 +241,6 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 
 /*
 #pragma mark - Navigation

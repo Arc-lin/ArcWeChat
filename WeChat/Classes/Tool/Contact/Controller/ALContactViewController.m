@@ -24,8 +24,9 @@
 @implementation ALContactViewController
 
 - (void)viewDidLoad {
+
     [super viewDidLoad];
-    
+
     [self loadUsers2];
 }
 - (void)viewWillAppear:(BOOL)animated

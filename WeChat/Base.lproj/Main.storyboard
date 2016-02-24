@@ -147,7 +147,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Lke-FB-pSi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2472" y="149"/>
+            <point key="canvasLocation" x="2471" y="-35"/>
         </scene>
         <!--聊天界面-->
         <scene sceneID="05v-Je-h56">
@@ -172,7 +172,7 @@
                                             <outlet property="delegate" destination="xXx-jW-yjZ" id="Y0Z-Ye-uGb"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzh-jm-aJj">
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xzh-jm-aJj">
                                         <rect key="frame" x="540" y="8" width="50" height="30"/>
                                         <color key="backgroundColor" red="0.2255896214098321" green="0.59107827240566035" blue="0.35234609952592655" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
@@ -186,14 +186,31 @@
                                             <action selector="sendBtnClick:" destination="xXx-jW-yjZ" eventType="touchUpInside" id="c0u-vt-EJT"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAO-bQ-IY4" userLabel="发送图片">
+                                        <rect key="frame" x="548" y="6" width="35" height="35"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="35" id="Bjg-Je-IW2"/>
+                                            <constraint firstAttribute="width" constant="35" id="xSm-Dp-p3x"/>
+                                        </constraints>
+                                        <state key="normal" backgroundImage="TypeSelectorBtn_Black">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="TypeSelectorBtnHL_Black"/>
+                                        <connections>
+                                            <action selector="imgChooseBtnClick:" destination="xXx-jW-yjZ" eventType="touchUpInside" id="Kc4-WG-D1B"/>
+                                            <action selector="sendBtnClick:" destination="xXx-jW-yjZ" eventType="touchUpInside" id="kGG-As-NPT"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="xzh-jm-aJj" firstAttribute="leading" secondItem="WTe-L9-b7t" secondAttribute="trailing" constant="5" id="AvR-83-aPm"/>
                                     <constraint firstAttribute="trailing" secondItem="xzh-jm-aJj" secondAttribute="trailing" constant="10" id="NEU-3V-wAV"/>
+                                    <constraint firstItem="kAO-bQ-IY4" firstAttribute="centerY" secondItem="xzh-jm-aJj" secondAttribute="centerY" id="Qgt-25-fI2"/>
                                     <constraint firstAttribute="height" constant="46" id="iwT-2g-rDD"/>
                                     <constraint firstItem="xzh-jm-aJj" firstAttribute="centerY" secondItem="Ujj-BO-eLp" secondAttribute="centerY" id="m2X-6f-MQi"/>
                                     <constraint firstItem="WTe-L9-b7t" firstAttribute="leading" secondItem="Ujj-BO-eLp" secondAttribute="leading" constant="10" id="sav-Pv-GOl"/>
+                                    <constraint firstItem="kAO-bQ-IY4" firstAttribute="centerX" secondItem="xzh-jm-aJj" secondAttribute="centerX" id="yXp-Xi-WiG"/>
                                     <constraint firstItem="WTe-L9-b7t" firstAttribute="centerY" secondItem="Ujj-BO-eLp" secondAttribute="centerY" id="zs0-Fc-qiC"/>
                                 </constraints>
                             </view>
@@ -237,13 +254,15 @@
                     <navigationItem key="navigationItem" title="聊天界面" id="4zx-xu-1Ll"/>
                     <connections>
                         <outlet property="bottomConstraint" destination="1YQ-FL-5fZ" id="AAx-eh-FJQ"/>
+                        <outlet property="imageChoose" destination="kAO-bQ-IY4" id="CDo-1O-JIk"/>
+                        <outlet property="msgSend" destination="xzh-jm-aJj" id="c2w-OS-vSh"/>
                         <outlet property="tableView" destination="iVR-T2-bML" id="nn7-l5-zFO"/>
                         <outlet property="textField" destination="WTe-L9-b7t" id="64v-cV-hSw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xw5-YJ-Gei" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2471" y="814"/>
+            <point key="canvasLocation" x="2471" y="619"/>
         </scene>
         <!--发现-->
         <scene sceneID="Q6Z-k9-jX5">
@@ -768,6 +787,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="TypeSelectorBtnHL_Black" width="35" height="35"/>
+        <image name="TypeSelectorBtn_Black" width="35" height="35"/>
         <image name="tabbar_contacts" width="27" height="23"/>
         <image name="tabbar_contactsHL" width="27" height="23"/>
         <image name="tabbar_discover" width="23" height="23"/>
