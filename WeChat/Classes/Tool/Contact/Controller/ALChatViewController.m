@@ -8,12 +8,14 @@
 
 #import "ALChatViewController.h"
 #import "XMPPvCardTemp.h"
+#import "HttpTool.h"
+#import "UIImageView+WebCache.h"
 
 @interface ALChatViewController ()<NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSFetchedResultsController *_resultContr;
 }
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) IBOutlet UITableView  *tableView;
 @property (weak, nonatomic) IBOutlet UIButton *imageChoose;
 @property (weak, nonatomic) IBOutlet UIButton *msgSend;
 @property (weak, nonatomic) IBOutlet UITextField *textField;
@@ -95,55 +97,105 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *ID = @"ChatCell";
-    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ID];
+        static NSString *ID = @"ChatCell";
+        UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ID];
     
-    // 获取聊天信息
-    XMPPMessageArchiving_Message_CoreDataObject *msgObj = _resultContr.fetchedObjects[indexPath.row];
+        // 获取聊天信息
+        XMPPMessageArchiving_Message_CoreDataObject *msgObj = _resultContr.fetchedObjects[indexPath.row];
     
-    // 判断消息的类型，有没有附件
-    // 1. 获取原始的xml数据
-    XMPPMessage *message = msgObj.message;
+        // 判断消息的类型，有没有附件
+        // 1. 获取原始的xml数据
+        XMPPMessage *message = msgObj.message;
     
-    // 获取附件的类型
-    NSString *bodyType = [message attributeStringValueForName:@"bodyType"];
+        // 获取附件的类型
+        NSString *bodyType = [message attributeStringValueForName:@"bodyType"];
     
-    if ([bodyType isEqualToString:@"image"]) { // 图片
-            // 2.遍历message的子节点
-            NSArray *child = message.children;
-            for (XMPPElement *note in child) {
-                // 获取节点的名字
-                if ([[note name] isEqualToString:@"attachment"]) {
-                    ALLog(@"获取到附件");
-                    // 获取附件字符串，然后转成NSData,再转成图片
-                    NSString *imgBase64Str = [note stringValue];
-                    NSData *imgData = [[NSData alloc] initWithBase64EncodedString:imgBase64Str options:0];
-                    UIImage *img = [UIImage imageWithData:imgData];
-                    UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake(150, 0, 100, 100)];
-                    imgV.contentMode = UIViewContentModeScaleAspectFill;
-                    imgV.clipsToBounds = YES;
-                    imgV.image = img;
-                    [cell addSubview:imgV];
-                }
-            }
-    }else if([bodyType isEqualToString:@"sound"]){ // 音频
+        if ([bodyType isEqualToString:@"image"]) { // 图片
+            // 获取文件路径
+            NSString *url = msgObj.body;
+            // 显示图片
+            UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake(150, 0, 100, 100)];
+            [imgV sd_setImageWithURL:[NSURL URLWithString:url]];
+            [cell addSubview:imgV];
+            
+            // 清除循环应用导致的残留文字
+            cell.textLabel.text = nil;
+            
+        }else{ // 纯文本
+            cell.textLabel.text = msgObj.body;
+            // 清除循环应用导致的残留文字
+            cell.imageView.image = nil;
+        }
     
-    }else{ // 纯文本
-        cell.textLabel.text = msgObj.body;
-    }
-    
-    if (msgObj.thread) {
-        NSData *imageData = [[ALXMPPTool sharedALXMPPTool].avatar photoDataForJID:self.friendJid];
-        cell.imageView.image = [UIImage imageWithData:imageData];
-    }else{
-        NSData *imageData  = [ALXMPPTool sharedALXMPPTool].vCard.myvCardTemp.photo;
-        cell.imageView.image = [UIImage imageWithData:imageData];
-    }
-   
-    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",msgObj.timestamp];
-    
-    return cell;
+        if (msgObj.thread) {
+            NSData *imageData = [[ALXMPPTool sharedALXMPPTool].avatar photoDataForJID:self.friendJid];
+            cell.imageView.image = [UIImage imageWithData:imageData];
+        }else{
+            NSData *imageData  = [ALXMPPTool sharedALXMPPTool].vCard.myvCardTemp.photo;
+            cell.imageView.image = [UIImage imageWithData:imageData];
+            
+        }
+       
+        cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",msgObj.timestamp];
+        
+        return cell;
+
 }
+
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    static NSString *ID = @"ChatCell";
+//    UITableViewCell *cell = [self.tableView dequeueReusableCellWithIdentifier:ID];
+//    
+//    // 获取聊天信息
+//    XMPPMessageArchiving_Message_CoreDataObject *msgObj = _resultContr.fetchedObjects[indexPath.row];
+//    
+//    // 判断消息的类型，有没有附件
+//    // 1. 获取原始的xml数据
+//    XMPPMessage *message = msgObj.message;
+//    
+//    // 获取附件的类型
+//    NSString *bodyType = [message attributeStringValueForName:@"bodyType"];
+//    
+//    if ([bodyType isEqualToString:@"image"]) { // 图片
+//            // 2.遍历message的子节点
+//            NSArray *child = message.children;
+//            for (XMPPElement *note in child) {
+//                // 获取节点的名字
+//                UIImageView *imgV = [[UIImageView alloc] initWithFrame:CGRectMake(150, 0, 100, 100)];
+//                if ([[note name] isEqualToString:@"attachment"]) {
+//                    ALLog(@"获取到附件");
+//                    // 获取附件字符串，然后转成NSData,再转成图片
+//                    NSString *imgBase64Str = [note stringValue];
+//                    NSData *imgData = [[NSData alloc] initWithBase64EncodedString:imgBase64Str options:0];
+//                    UIImage *img = [UIImage imageWithData:imgData];
+//                    imgV.contentMode = UIViewContentModeScaleAspectFill;
+//                    imgV.clipsToBounds = YES;
+//                    imgV.image = img;
+//                    [cell addSubview:imgV];
+//                }else{
+//                    [imgV removeFromSuperview];
+//                }
+//            }
+//    }else if([bodyType isEqualToString:@"sound"]){ // 音频
+//    
+//    }else{ // 纯文本
+//        cell.textLabel.text = msgObj.body;
+//    }
+//
+//    if (msgObj.thread) {
+//        NSData *imageData = [[ALXMPPTool sharedALXMPPTool].avatar photoDataForJID:self.friendJid];
+//        cell.imageView.image = [UIImage imageWithData:imageData];
+//    }else{
+//        NSData *imageData  = [ALXMPPTool sharedALXMPPTool].vCard.myvCardTemp.photo;
+//        cell.imageView.image = [UIImage imageWithData:imageData];
+//        
+//    }
+//   
+//    cell.detailTextLabel.text = [NSString stringWithFormat:@"%@",msgObj.timestamp];
+//    
+//    return cell;
+//}
 
 #pragma mark 键盘的通知
 #pragma mark 键盘出现
@@ -184,6 +236,8 @@
         
         // 清空输入框的文本
         self.textField.text = nil;
+        self.msgSend.hidden = YES;
+        self.imageChoose.hidden = NO;
     }
 }
 
@@ -203,10 +257,48 @@
     UIImage *img = info[UIImagePickerControllerOriginalImage];
     
     // 发送附件
-    [self sendAttachmentWithData:UIImagePNGRepresentation(img) bodyType:@"image"];
+//    [self sendAttachmentWithData:UIImagePNGRepresentation(img) bodyType:@"image"];
+    [self sendImg:img];
     
     // 隐藏图片选择控制器
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)sendImg:(UIImage *)img
+{
+    // 1.把文件上传到服务器
+    /**
+     *  >文件上传的路径
+     *      http://localhost:8080/xmppfileupload/
+     *  >文件上传的方法不是使用post，而是使用put   put: 文件上传的路径也就是文件下载的路径
+     */
+    // 1.1 定义文件名，user+时间戳
+    NSDateFormatter *dateForm = [[NSDateFormatter alloc] init];
+    dateForm.dateFormat = @"yyyyMMddHHmmss";
+    NSString *currentTimeStr = [dateForm stringFromDate:[NSDate date]];
+    
+    NSString *fileName = [[ALAccount shareAccount].loginUser stringByAppendingString:currentTimeStr];
+    
+    // 1.2 拼接文件上传路径
+    NSString *uploadPath = [@"http://localhost:8080/xmppfileupload/" stringByAppendingString:fileName];
+    ALLog(@"%@",uploadPath);
+    
+    // 2.上传成功后，把文件路径发送给Openfire服务器
+    HttpTool *httpTool = [[HttpTool alloc] init];
+    // 图片上传的时候，以jpg格式上传
+    // 因为文件服务器只接收jpg
+    [httpTool uploadData:UIImageJPEGRepresentation(img, 0.75) url:[NSURL URLWithString:uploadPath] progressBlock:nil completion:^(NSError *error) {
+        if (!error) {
+            ALLog(@"上传成功");
+            XMPPMessage *msg = [XMPPMessage messageWithType:@"chat" to:self.friendJid];
+            [msg addAttributeWithName:@"bodyType" stringValue:@"image"];
+            [msg addBody:uploadPath];
+            
+            [[ALXMPPTool sharedALXMPPTool].xmppStream sendElement:msg];
+        }else{
+            ALLog(@"上传失败");
+        }
+    }];
 }
 
 #pragma mark 发送附件
