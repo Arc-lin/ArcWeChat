@@ -28,7 +28,7 @@
 //    [self connectToHost];
     
     // 配置XMPP的日志
-//    [DDLog addLogger:[DDTTYLogger sharedInstance]];
+    [DDLog addLogger:[DDTTYLogger sharedInstance]];
     
     // 判断用户是否登录
     if ([ALAccount shareAccount].isLogin) {
