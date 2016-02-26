@@ -30,8 +30,8 @@
 //#import "XMPPBandwidthMonitor.h"
 // 
 //#import "XMPPCoreDataStorage.h"
-//
-//#import "XMPPReconnect.h"
+// 自动连接 
+#import "XMPPReconnect.h"
 // 花名册模块
 #import "XMPPRoster.h"
 //#import "XMPPRosterMemoryStorage.h"
